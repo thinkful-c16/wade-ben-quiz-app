@@ -33,10 +33,13 @@ const QUIZDATA = [
 // Create your initial store
 const STORE = {
   // Current Question
+  'current question': '',
   // User's answer choice(s)
+  'user answer choice(s)': [],
   // Current view
+  'current view': '',
   // Score? Anything else?
-
+  'answers correct': 0
 };
 
 function handleWelcomeView() {
@@ -100,7 +103,9 @@ function renderQuestionView(currentIndex) {
 function handleAnswerSubmitted() {
   $('.user-controls').on('click', '.input-button', () => {
     // Retrieve answer identifier of user-checked radio button
+    let userAnswer = $('input[type=radio][name=answer]:checked').val();
     // Perform check: User answer === Correct Answer?
+
     // Update Store and render appropriate section  
   });
 }
