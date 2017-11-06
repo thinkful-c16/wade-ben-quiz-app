@@ -93,6 +93,7 @@ function renderQuestionView(currentIndex) {
   </form>
 </div>`
   );
+  handleAnswerSubmitted();
 }
 
 // Event handlers
