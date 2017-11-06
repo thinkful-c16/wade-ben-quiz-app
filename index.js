@@ -1,38 +1,34 @@
 'use strict';
 
-// In-memory example of database of answers
-const ANSWERS1 = [
-    {answer: 'Asmodeus', correct: true},
-    {answer: 'Mephistopholes', correct: false},
-    {answer: 'Dionysus', correct: false}
-]
-
-const ANSWERS2 = [
-  {answer: 'one', correct: false},
-  {answer: 'two', correct: true},
-  {answer: 'three', correct: false}
-]
-
-const ANSWERS3 = [
-  {answer: 'one', correct: true},
-  {answer: 'two', correct: false},
-  {answer: 'three', correct: false}
-]
-
-const ANSWERS4 = [
-  {answer: 'one', correct: false},
-  {answer: 'two', correct: false},
-  {answer: 'three', correct: true}
-]
-
-const ANSWERS5 = [
-  {answer: 'one', correct: false},
-  {answer: 'two', correct: true},
-  {answer: 'three', correct: false}
-]
-
 // In-memory database of questions
-const QUESTIONS = [];
+
+const QUESTIONS = [
+  {
+    question: 'Who is the supreme lord of the nine hells?',
+    answers: ['Asmodeus', 'Mephistopholes', 'Richard Greenhill'],
+    correctAnswer: 'Asmodeus'
+  },
+  {
+    question: 'Question two text',
+    answers: ['answer one', 'answer two', 'answer three'],
+    correctAnswer: 'answer one'
+  },
+  {
+    question: 'Question two text',
+    answers: ['answer one', 'answer two', 'answer three'],
+    correctAnswer: 'answer one'
+  },
+  {
+    question: 'Question two text',
+    answers: ['answer one', 'answer two', 'answer three'],
+    correctAnswer: 'answer one'
+  },
+  {
+    question: 'Question two text',
+    answers: ['answer one', 'answer two', 'answer three'],
+    correctAnswer: 'answer one'
+  }
+];
 
 // Create your initial store
 const STORE = {
@@ -40,9 +36,14 @@ const STORE = {
   // User's answer choice(s)
   // Current view
   // Score? Anything else?
+
 };
 
 // Template generators
+function generateWelcomeView() {
+
+}
+
 function generateAnswerList(answers) {}
 
 // Rendering functions
