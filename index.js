@@ -1,8 +1,8 @@
 'use strict';
 
-// In-memory database of questions
+// In-memory database of questions, answers, and correct answer
 
-const QUESTIONS = [
+const QUIZDATA = [
   {
     question: 'Who is the supreme lord of the nine hells?',
     answers: ['Asmodeus', 'Mephistopholes', 'Richard Greenhill'],
@@ -39,15 +39,61 @@ const STORE = {
 
 };
 
-// Template generators
-function generateWelcomeView() {
-
+function handleWelcomeView() {
+  // listener for begin button to trigger rendering of first question
+  $('#quiz-start-button').on('click', event => {
+    let currentQuestionNumberIndex = 0;
+    renderQuestionView(currentQuestionNumberIndex);
+  });
 }
 
-function generateAnswerList(answers) {}
+// Template generators
+// function generateAnswerList(answers) {}
+
 
 // Rendering functions
-function renderQuestionText() {}
+function renderQuestionView(currentIndex) {
+  // Definition of local variables for the purpose of accessing contents of QUIZDATA
+  let displayedQuestionNumber = currentIndex;
+  displayedQuestionNumber++;
+  let currentQuestion = QUIZDATA[currentIndex];
+  let question = currentQuestion.question;
+  let answerOne = currentQuestion.answers[0];
+  let answerTwo = currentQuestion.answers[1];
+  let answerThree = currentQuestion.answers[2];
+
+  // inserting Question Template into the DOM
+  $('.container').html(
+    `<div>
+  <h1>Infernal Plane Quiz</h1>
+  <div class= 'questions-answered'>
+      <p>Question ${displayedQuestionNumber}/5</p>
+  </div>
+  <form>
+      <h3>${question}</h3>
+      <div>
+          <input type="radio" id="${answerOne}"
+          name="answer" value="${answerOne}">
+          <label for="${answerOne}">${answerOne}</label>
+          <br>
+          <input type="radio" id="${answerTwo}"
+          name="answer" value="${answerTwo}">
+          <label for="${answerTwo}">${answerTwo}</label>
+          <br>
+          <input type="radio" id="${answerThree}"
+          name="answer" value="${answerThree}">
+          <label for="${answerThree}">${answerThree}</label>
+      </div>
+      <div class="user-input">
+          <button name= "submit-button" id= "answer-submit-button" class= "input-button" type= "submit" >Submit Answer</button>
+      </div>
+      <div class= "current-score">
+          <p>Current score: 0/5</p>
+      </div>
+  </form>
+</div>`
+  );
+}
 
 // Event handlers
 function handleAnswerSubmitted() {
@@ -59,5 +105,6 @@ function handleAnswerSubmitted() {
 }
 
 $(function main() {
-    handleAnswerSubmitted();
-}
+  handleWelcomeView();
+  handleAnswerSubmitted();
+});
