@@ -33,11 +33,11 @@ const QUIZDATA = [
 // Create your initial store
 const STORE = {
   // Current Question
-  'current question': '',
+  'current question': 'None',
   // User's answer choice(s)
   'user answer choice(s)': [],
   // Current view
-  'current view': '',
+  'current view': 'Welcome view',
   // Score? Anything else?
   'answers correct': 0
 };
@@ -45,6 +45,7 @@ const STORE = {
 function handleWelcomeView() {
   // listener for begin button to trigger rendering of first question
   $('#quiz-start-button').on('click', event => {
+    // setting question number index to 0 and calling render function for first question
     let currentQuestionNumberIndex = 0;
     renderQuestionView(currentQuestionNumberIndex);
   });
@@ -65,7 +66,11 @@ function renderQuestionView(currentIndex) {
   let answerTwo = currentQuestion.answers[1];
   let answerThree = currentQuestion.answers[2];
 
-  // inserting Question Template into the DOM
+  // Updating STORE with relevant values
+  STORE['current question'] = question;
+  STORE['current view'] = `Question number ${displayedQuestionNumber}`;
+
+  // Inserting Question Template into the DOM
   $('.container').html(
     `<div>
   <h1>Infernal Plane Quiz</h1>
