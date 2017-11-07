@@ -110,6 +110,30 @@ function generateAnswerFeedback (currentQuestion) {
   </div>`;
 }
 
+function generateFinalFeedback (currentQuestion) {
+  // Returning answer feedback template html
+  return `<div>
+  <h1>Infernal Plane Quiz</h1>
+  <div class= 'questions-answered'>
+    <p>Question ${STORE['question counter']}/5</p>
+  </div>
+  <div class= 'user-answer'>Your answer: ${STORE['user answer choice(s)']}
+  </div>
+  <div class= 'correct-answer'>Correct answer: ${STORE['current question'].correctAnswer}
+  </div>
+  <div class="user-input">
+  <button name= "submit-button" id= "see-results-button" class= "input-button" type= "submit" >See results</button>
+  </div>
+  <div class= "current-score">
+    <p>Current score: ${STORE['answers correct']}/5</p>
+  </div>
+  </div>`;
+}
+
+function generateResults () {
+  // Returning results feedback template html depending on score
+}
+
 // Rendering functions
 function renderQuestionView(currentIndex) {
 //  Render the question view in the DOM
@@ -119,11 +143,21 @@ function renderQuestionView(currentIndex) {
 }
 
 function renderAnswerFeedback(currentQuestion) {
-  const answerFeedback = generateAnswerFeedback(currentQuestion);
-  $('.container').html(answerFeedback);
-  // Render the question feedback in the DOM
-  handleNextQuestion();
+  if (STORE['question counter'] < 5) {
+    const answerFeedback = generateAnswerFeedback(currentQuestion);
+    $('.container').html(answerFeedback);
+    // Render the question feedback in the DOM
+    handleNextQuestion();
+  }
+  else {
+    const answerFeedback = generateFinalFeedback(currentQuestion);
+    $('.container').html(answerFeedback);
+    // Render the question feedback in the DOM
+    handleSeeResults();
+  }
 }
+
+function renderResults() {}
 
 // Event handlers
 function handleWelcomeView() {
@@ -168,7 +202,13 @@ function handleNextQuestion () {
   });
 }
 
-function handleFinalQuestion () {}
+function handleSeeResults () {
+  // Listener for see results button
+  $('.user-input').on('click', '.input-button', event => {
+    event.preventDefault();
+    renderResults();
+  });
+}
 
 function handleQuizReset () {}
 
