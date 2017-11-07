@@ -33,13 +33,13 @@ const QUESTIONS = [
 // Create your initial store
 const STORE = {
   // Current Question Index
-  'current question': 0,
+  currentQuestion: 0,
   // Current Question counter
-  'current counter': 1,
+  currentCounter: 1,
   // User's answer choice(s)
   // Current view
   // Score? Anything else?
-  'score': 0,
+  score: 0,
 };
 
 function handleUserInputs() {
@@ -51,17 +51,17 @@ function handleUserInputs() {
 
 // Template generators
 function generateAnswerView() {
-  let questionIndex = STORE['current question'];
+  let questionIndex = STORE.currentQuestion;  //********** change all keys to camelCasing (no spaces) */
   let answers = QUESTIONS[questionIndex].answers;
 
   
   return `<div>
       <h1>Infernal Plane Quiz</h1>
       <div class= 'questions-answered'>
-          <p>Question ${STORE['current counter']}/5</p>
+          <p>Question ${STORE.currentCounter}/5</p>
       </div>
       <form>
-          <h3>${QUESTIONS[STORE['current question']].question}</h3>
+          <h3>${QUESTIONS[STORE.currentQuestion].question}</h3>
           <div>
               <input type="radio" id="${answers[0]}"
               name="answer" value="${answers[0]}">
@@ -79,7 +79,7 @@ function generateAnswerView() {
               <button name= "submit-button" id= "answer-submit-button" class= "input-button" type= "submit" >Submit Answer</button>
           </div>
           <div class= "current-score">
-              <p>Current score: ${STORE['score']}/5</p>
+              <p>Current score: ${STORE.score}/5</p>
           </div>
       </form>
     </div>`
