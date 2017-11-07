@@ -35,28 +35,16 @@ const STORE = {
   // Current Question
   'current question': 'None',
   // User's answer choice(s)
-  'user answer choice(s)': [],
+  'user answer choice(s)': 'None',
   // Current view
-  'current view': 'Welcome view',
+  'current view': 'Welcome to the quiz!',
   // Score? Anything else?
+  'answer counter': 0,
   'answers correct': 0
 };
 
-function handleWelcomeView() {
-  // listener for begin button to trigger rendering of first question
-  $('#quiz-start-button').on('click', event => {
-    // setting question number index to 0 and calling render function for first question
-    let currentQuestionNumberIndex = 0;
-    renderQuestionView(currentQuestionNumberIndex);
-  });
-}
-
 // Template generators
-// function generateAnswerList(answers) {}
-
-
-// Rendering functions
-function renderQuestionView(currentIndex) {
+function generateAnswerList(currentIndex) {
   // Definition of local variables for the purpose of accessing contents of QUIZDATA
   let displayedQuestionNumber = currentIndex;
   displayedQuestionNumber++;
@@ -67,12 +55,11 @@ function renderQuestionView(currentIndex) {
   let answerThree = currentQuestion.answers[2];
 
   // Updating STORE with relevant values
-  STORE['current question'] = question;
+  STORE['current question'] = QUIZDATA[currentIndex];
   STORE['current view'] = `Question number ${displayedQuestionNumber}`;
 
-  // Inserting Question Template into the DOM
-  $('.container').html(
-    `<div>
+  // Returning Question Template html
+  return `<div>
   <h1>Infernal Plane Quiz</h1>
   <div class= 'questions-answered'>
       <p>Question ${displayedQuestionNumber}/5</p>
@@ -99,21 +86,54 @@ function renderQuestionView(currentIndex) {
           <p>Current score: 0/5</p>
       </div>
   </form>
-</div>`
-  );
-  handleAnswerSubmitted();
+</div>`;
+}
+
+function generateAnswerFeedback () {}
+
+// Rendering functions
+function renderQuestionView(currentIndex) {
+//  Render the question view in the DOM
+  const questionAnswer = generateAnswerList(currentIndex);
+  $('.container').html(questionAnswer);
+  handleAnswerSubmitted(STORE['current question']);
 }
 
 // Event handlers
-function handleAnswerSubmitted() {
-  $('.user-controls').on('click', '.input-button', () => {
+function handleWelcomeView() {
+  // listener for begin button to trigger rendering of first question
+  $('#quiz-start-button').on('click', event => {
+    // setting answer counter to 0 and calling render function for first question
+    STORE['answer counter'] = 0;
+    let currentQuestionNumberIndex = STORE['answer counter'];
+    renderQuestionView(currentQuestionNumberIndex);
+  });
+}
+
+function handleAnswerSubmitted(currentQuestion) {
+  $('.user-input').on('click', '.input-button', event => {
+    event.preventDefault();
     // Retrieve answer identifier of user-checked radio button
     let userAnswer = $('input[type=radio][name=answer]:checked').val();
+    // Update STORE to reflect user answer
+    STORE
     // Perform check: User answer === Correct Answer?
-
+    if (userAnswer === currentQuestion.correctAnswer) {
+      window.alert('Your answer is correct!');
+      STORE['user answer choice(s)'].push(userAnswer);
+      STORE['answers correct']++;
+    }
+    else {
+      window.alert('You answer is incorrect!');
+      STORE['user answer choice(s)'].push(userAnswer);
+    }
     // Update Store and render appropriate section  
   });
 }
+
+function handleNextQuestion () {}
+
+function handleQuizReset () {}
 
 $(function main() {
   handleWelcomeView();
