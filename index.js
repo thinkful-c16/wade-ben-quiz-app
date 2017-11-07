@@ -41,7 +41,7 @@ const STORE = {
 };
 
 //*************************************************/
-//*********    Combined even handlers   ***********/
+//*********   Combined event handlers   ***********/
 //*************************************************/
 function handleWelcomeView() {
   // listener for begin button to trigger rendering of first question
@@ -55,7 +55,7 @@ function handleWelcomeView() {
   })
 }
 //*************************************************/
-//*********    Combined even handlers   ***********/
+//*********   Combined even thandlers   ***********/
 //*************************************************/
 
 // Template generators
