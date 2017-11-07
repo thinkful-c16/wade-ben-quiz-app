@@ -30,7 +30,10 @@ const QUESTIONS = [
   }
 ];
 
+// *************************
 // Create your initial store
+// 
+
 const STORE = {
   // Current Question Index
   currentQuestion: 0,
@@ -43,25 +46,10 @@ const STORE = {
   score: 0,
 };
 
-function handleUserInputs() {
-  // listener for begin button to trigger rendering of first question
-  $('#quiz-start-button').on('click', event => {
-    renderQuestionView();
-  });
-  // listener for answer submit button
-  $('.container').on('click', '#answer-submit-button', event => {
-    event.preventDefault();
-    // updates userAnswer in store to reflect user answer selection
-    STORE.userAnswer = $( 'input[type=radio][name=answer]:checked' ).val();
-    // Perform check to determine if user answer is correct
-    if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
-      STORE.score++;
-    }
-    renderAnswerFeedback();
-  });
-}
-
+// *******************
 // Template generators
+// *******************
+
 function generateAnswerView() {
   let questionIndex = STORE.currentQuestion;  //********** change all keys to camelCasing (no spaces) */
   let answers = QUESTIONS[questionIndex].answers;
@@ -97,29 +85,93 @@ function generateAnswerView() {
     </div>`
   ;
 }
-// function generateAnswerList(answers) {}
 
-
-// Rendering functions
-function renderQuestionView() {
-  // Definition of local variables for the purpose of accessing contents of QUESTIONS
-  let questionAnswers = generateAnswerView();
-  // inserting Question Template into the DOM
-$('.container').html(questionAnswers);
+function generateAnswerFeedback() {
+  // conditionals for feedback specific to whether user answer is correct
+  if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
+    return `<div>
+    <h1>Infernal Plane Quiz</h1>
+    <div class= 'questions-answered'>
+      <p>Question ${STORE.currentCounter}/5</p>
+    </div>
+    <h3>Your answer is correct!</h3>
+    <div class= 'user-answer'>Your answer: ${STORE.userAnswer}
+    </div>
+    <div class= 'correct-answer'>Correct answer: ${QUESTIONS[STORE.currentQuestion].correctAnswer}
+    </div>
+    <div class="user-input">
+    <button name= "submit-button" id= "next-question-button" class= "input-button" type= "submit" >Next question</button>
+    </div>
+    <div class= "current-score">
+      <p>Current score: ${STORE.score}/5</p>
+    </div>
+    </div>`;
+  }
+  else {
+    return `<div>
+    <h1>Infernal Plane Quiz</h1>
+    <div class= 'questions-answered'>
+      <p>Question ${STORE.currentCounter}/5</p>
+    </div>
+    <h3>Your answer is incorrect!</h3>
+    <div class= 'user-answer'>Your answer: ${STORE.userAnswer}
+    </div>
+    <div class= 'correct-answer'>Correct answer: ${QUESTIONS[STORE.currentQuestion].correctAnswer}
+    </div>
+    <div class="user-input">
+    <button name= "submit-button" id= "next-question-button" class= "input-button" type= "submit" >Next question</button>
+    </div>
+    <div class= "current-score">
+      <p>Current score: ${STORE.score}/5</p>
+    </div>
+    </div>`;
+  }
 }
 
-function renderAnswerFeedback() {}
+// *******************
+// Rendering functions
+// *******************
 
+function renderQuestionView() {
+  // declaration of variable for answer view generation
+  let questionAnswers = generateAnswerView();
+  // inserting Question Template into the DOM
+  $('.container').html(questionAnswers);
+}
+
+function renderAnswerFeedback() {
+  // declaration of variable for feedback generation
+  let answerFeedback = generateAnswerFeedback();
+  // insertion answer feedback into the DOM
+  $('.container').html(answerFeedback);
+}
+
+// **************
 // Event handlers
-function handleAnswerSubmitted() {
-  $('.user-controls').on('click', '.input-button', () => {
-    // Retrieve answer identifier of user-checked radio button
-    // Perform check: User answer === Correct Answer?
-    // Update Store and render appropriate section  
+// **************
+
+function handleUserInputs() {
+  // listener for begin button to trigger rendering of first question
+  $('#quiz-start-button').on('click', event => {
+    renderQuestionView();
+  });
+  // listener for answer submit button
+  $('.container').on('click', '#answer-submit-button', event => {
+    event.preventDefault();
+    // updates userAnswer in store to reflect user answer selection
+    STORE.userAnswer = $( 'input[type=radio][name=answer]:checked' ).val();
+    // Perform check to determine if user answer is correct
+    if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
+      STORE.score++;
+    }
+    renderAnswerFeedback();
   });
 }
 
+// ******************
+// DOM ready function
+// ******************
+
 $(function main() {
   handleUserInputs();
-  handleAnswerSubmitted();
 });
