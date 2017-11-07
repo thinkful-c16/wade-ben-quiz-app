@@ -127,6 +127,46 @@ function generateAnswerFeedback() {
     </div>`;
   }
 }
+function generateFinalFeedback() {
+  if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
+    return `<div>
+    <h1>Infernal Plane Quiz</h1>
+    <div class= 'questions-answered'>
+      <p>Question ${STORE.currentCounter}/5</p>
+    </div>
+    <h3>Your answer is correct!</h3>
+    <div class= 'user-answer'>Your answer: ${STORE.userAnswer}
+    </div>
+    <div class= 'correct-answer'>Correct answer: ${QUESTIONS[STORE.currentQuestion].correctAnswer}
+    </div>
+    <div class="user-input">
+    <button name= "submit-button" id= "final-question-button" class= "input-button" type= "submit" >See your results!</button>
+    </div>
+    <div class= "current-score">
+      <p>Current score: ${STORE.score}/5</p>
+    </div>
+    </div>`;
+  }
+  else {
+    return `<div>
+    <h1>Infernal Plane Quiz</h1>
+    <div class= 'questions-answered'>
+      <p>Question ${STORE.currentCounter}/5</p>
+    </div>
+    <h3>Your answer is incorrect!</h3>
+    <div class= 'user-answer'>Your answer: ${STORE.userAnswer}
+    </div>
+    <div class= 'correct-answer'>Correct answer: ${QUESTIONS[STORE.currentQuestion].correctAnswer}
+    </div>
+    <div class="user-input">
+    <button name= "submit-button" id= "final-question-button" class= "input-button" type= "submit" >See your results!</button>
+    </div>
+    <div class= "current-score">
+      <p>Current score: ${STORE.score}/5</p>
+    </div>
+    </div>`;
+  }
+}
 
 // *******************
 // Rendering functions
@@ -141,9 +181,17 @@ function renderQuestionView() {
 
 function renderAnswerFeedback() {
   // declaration of variable for feedback generation
-  let answerFeedback = generateAnswerFeedback();
   // insertion answer feedback into the DOM
-  $('.container').html(answerFeedback);
+  if (STORE.currentQuestion < QUESTIONS.length) {
+    let answerFeedback = generateAnswerFeedback();
+    $('.container').html(answerFeedback);
+  }
+  else {
+    let answerFeedback = generateFinalFeedback();
+    $('.container').html(answerFeedback);
+  }
+  
+  
 }
 
 // **************
@@ -166,6 +214,16 @@ function handleUserInputs() {
     }
     renderAnswerFeedback();
   });
+  $('.container').on('click', '#next-question-button', event => {
+    event.preventDefault();
+    STORE.currentQuestion++;
+    STORE.currentCounter++;
+    renderQuestionView();
+  });
+  $('.container').on('click', '#final-question-button', event => {
+    event.preventDefault();
+    renderResultsView();
+  })
 }
 
 // ******************
