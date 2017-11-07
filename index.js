@@ -90,9 +90,9 @@ function generateAnswerView() {
 // Rendering functions
 function renderQuestionView() {
   // Definition of local variables for the purpose of accessing contents of QUESTIONS
-
+  let questionAnswers = generateAnswerView();
   // inserting Question Template into the DOM
-  generateAnswerView();
+$('.container').html(questionAnswers);
 }
 
 // Event handlers
