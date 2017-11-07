@@ -4,29 +4,29 @@
 
 const QUIZDATA = [
   {
-    question: 'Who is the supreme lord of the nine hells?',
-    answers: ['Asmodeus', 'Mephistopholes', 'Richard Greenhill'],
+    question: 'Who is the supreme lord and most powerful archdevil of the Nine Hells?',
+    answers: ['Asmodeus', 'Richard Greenhill', 'Mephistopheles'],
     correctAnswer: 'Asmodeus'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'How many layers are there in the Nine Hells?',
+    answers: ['Several thousand', 'Only one', 'Nine'],
+    correctAnswer: 'Nine'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'What is the arrival point for any visitors to the Nine Hells?',
+    answers: ['the stench-ridden bog of Minauros', 'the rocky wastes of Avernus', 'the dark pits of Nessus'],
+    correctAnswer: 'the rocky wastes of Avernus'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'What is the largest metropolis in the Nine Hells?',
+    answers: ['the Iron City of Dis', 'the Clockwork Nirvana of Mechanus', 'Abriymoch, the Obsidian Fortress'],
+    correctAnswer: 'the Iron City of Dis'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'Where does the infernal court of Asmodeus reside?',
+    answers: ['the River Styx', 'the citadel-spire of Malsheem', 'the City of Brass'],
+    correctAnswer: 'the citadel-spire of Malsheem'
   }
 ];
 
@@ -34,12 +34,13 @@ const QUIZDATA = [
 const STORE = {
   // Current Question
   'current question': 'None',
+  'current question index': 0,
   // User's answer choice(s)
   'user answer choice(s)': 'None',
   // Current view
   'current view': 'Welcome to the quiz!',
   // Score? Anything else?
-  'answer counter': 0,
+  'question counter': 1,
   'answers correct': 0
 };
 
@@ -83,7 +84,7 @@ function generateAnswerList(currentIndex) {
           <button name= "submit-button" id= "answer-submit-button" class= "input-button" type= "submit" >Submit answer</button>
       </div>
       <div class= "current-score">
-          <p>Current score: 0/5</p>
+          <p>Current score: ${STORE['answers correct']}/5</p>
       </div>
   </form>
 </div>`;
@@ -94,7 +95,7 @@ function generateAnswerFeedback (currentQuestion) {
   return `<div>
   <h1>Infernal Plane Quiz</h1>
   <div class= 'questions-answered'>
-    <p>Question ${STORE['answer counter']}/5</p>
+    <p>Question ${STORE['question counter']}/5</p>
   </div>
   <div class= 'user-answer'>Your answer: ${STORE['user answer choice(s)']}
   </div>
@@ -121,27 +122,28 @@ function renderAnswerFeedback(currentQuestion) {
   const answerFeedback = generateAnswerFeedback(currentQuestion);
   $('.container').html(answerFeedback);
   // Render the question feedback in the DOM
+  handleNextQuestion();
 }
 
 // Event handlers
 function handleWelcomeView() {
   // listener for begin button to trigger rendering of first question
   $('#quiz-start-button').on('click', event => {
-    // setting answer counter to 0 and calling render function for first question
-    STORE['answer counter'] = 0;
-    let currentQuestionNumberIndex = STORE['answer counter'];
+    // setting answer counter to 1 and calling render function for first question
+    STORE['question counter'] = 1;
+    let currentQuestionNumberIndex = STORE['current question index'];
     renderQuestionView(currentQuestionNumberIndex);
   });
 }
 
 function handleAnswerSubmitted(currentQuestion) {
+  // Listener for submit answer button
   $('.user-input').on('click', '.input-button', event => {
     event.preventDefault();
     // Retrieve answer identifier of user-checked radio button
     let userAnswer = $('input[type=radio][name=answer]:checked').val();
     // Update STORE to reflect user answer
     STORE['user answer choice(s)'] = $('input[type=radio][name=answer]:checked').val();
-    STORE['answer counter']++;
     // Perform check: User answer === Correct Answer?
     if (userAnswer === currentQuestion.correctAnswer) {
       window.alert('Your answer is correct!');
@@ -154,11 +156,24 @@ function handleAnswerSubmitted(currentQuestion) {
   });
 }
 
-function handleNextQuestion () {}
+function handleNextQuestion () {
+  // Listener for next question button
+  $('.user-input').on('click', '.input-button', event => {
+    event.preventDefault();
+    // updating question counter in STORE
+    STORE['question counter']++;
+    STORE['current question index']++;
+    let currentQuestionNumberIndex = STORE['current question index'];
+    renderQuestionView(currentQuestionNumberIndex);
+  });
+}
+
+function handleFinalQuestion () {}
 
 function handleQuizReset () {}
 
 $(function main() {
   handleWelcomeView();
   handleAnswerSubmitted();
+  handleNextQuestion();
 });
