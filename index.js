@@ -37,6 +37,7 @@ const STORE = {
   // Current Question counter
   currentCounter: 1,
   // User's answer choice(s)
+  userAnswer: '',
   // Current view
   // Score? Anything else?
   score: 0,
@@ -46,6 +47,17 @@ function handleUserInputs() {
   // listener for begin button to trigger rendering of first question
   $('#quiz-start-button').on('click', event => {
     renderQuestionView();
+  });
+  // listener for answer submit button
+  $('.container').on('click', '#answer-submit-button', event => {
+    event.preventDefault();
+    // updates userAnswer in store to reflect user answer selection
+    STORE.userAnswer = $( 'input[type=radio][name=answer]:checked' ).val();
+    // Perform check to determine if user answer is correct
+    if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
+      STORE.score++;
+    }
+    renderAnswerFeedback();
   });
 }
 
@@ -95,6 +107,8 @@ function renderQuestionView() {
   // inserting Question Template into the DOM
 $('.container').html(questionAnswers);
 }
+
+function renderAnswerFeedback() {}
 
 // Event handlers
 function handleAnswerSubmitted() {
