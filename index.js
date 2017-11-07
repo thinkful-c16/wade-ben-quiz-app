@@ -275,12 +275,20 @@ function handleUserInputs() {
   $('.container').on('click', '#answer-submit-button', event => {
     event.preventDefault();
     // updates userAnswer in store to reflect user answer selection
-    STORE.userAnswer = $( 'input[type=radio][name=answer]:checked' ).val();
-    // Perform check to determine if user answer is correct
-    if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
-      STORE.score++;
+    STORE.userAnswer = $('input[type=radio][name=answer]:checked').val();
+    // Perform check to prevent user from not selecting any option
+    if (!$('input[name=\'answer\']').is(':checked')) { 
+      alert('Please select an answer from the list.');
     }
-    renderAnswerFeedback();
+    // Perform check to determine if user answer is correct
+    else if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
+      STORE.score++;
+      renderAnswerFeedback();
+    }
+
+    else {
+      renderAnswerFeedback();
+    }
   });
 
   $('.container').on('click', '#next-question-button', event => {
