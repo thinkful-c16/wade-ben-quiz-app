@@ -80,7 +80,7 @@ function generateAnswerList(currentIndex) {
           <label for="${answerThree}">${answerThree}</label>
       </div>
       <div class="user-input">
-          <button name= "submit-button" id= "answer-submit-button" class= "input-button" type= "submit" >Submit Answer</button>
+          <button name= "submit-button" id= "answer-submit-button" class= "input-button" type= "submit" >Submit answer</button>
       </div>
       <div class= "current-score">
           <p>Current score: 0/5</p>
@@ -101,12 +101,12 @@ function generateAnswerFeedback (currentQuestion) {
   <div class= 'correct-answer'>Correct answer: ${STORE['current question'].correctAnswer}
   </div>
   <div class="user-input">
-  <button name= "submit-button" id= "next-question-button" class= "input-button" type= "submit" >Submit Answer</button>
+  <button name= "submit-button" id= "next-question-button" class= "input-button" type= "submit" >Next question</button>
   </div>
   <div class= "current-score">
     <p>Current score: ${STORE['answers correct']}/5</p>
   </div>
-  </div>`
+  </div>`;
 }
 
 // Rendering functions
@@ -118,7 +118,8 @@ function renderQuestionView(currentIndex) {
 }
 
 function renderAnswerFeedback(currentQuestion) {
-  const answerFeedback = generateAnswerFeedback(currentQuestion)
+  const answerFeedback = generateAnswerFeedback(currentQuestion);
+  $('.container').html(answerFeedback);
   // Render the question feedback in the DOM
 }
 
@@ -139,7 +140,7 @@ function handleAnswerSubmitted(currentQuestion) {
     // Retrieve answer identifier of user-checked radio button
     let userAnswer = $('input[type=radio][name=answer]:checked').val();
     // Update STORE to reflect user answer
-    STORE['answer choice'] = $('input[type=radio][name=answer]:checked').val();
+    STORE['user answer choice(s)'] = $('input[type=radio][name=answer]:checked').val();
     STORE['answer counter']++;
     // Perform check: User answer === Correct Answer?
     if (userAnswer === currentQuestion.correctAnswer) {
