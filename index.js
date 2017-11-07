@@ -4,29 +4,29 @@
 
 const QUESTIONS = [
   {
-    question: 'Who is the supreme lord of the nine hells?',
-    answers: ['Asmodeus', 'Mephistopholes', 'Richard Greenhill'],
+    question: 'Who is the supreme lord and most powerful archdevil of the Nine Hells?',
+    answers: ['Asmodeus', 'Richard Greenhill', 'Mephistopheles'],
     correctAnswer: 'Asmodeus'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'How many layers are there in the Nine Hells?',
+    answers: ['Several thousand', 'Only one', 'Nine'],
+    correctAnswer: 'Nine'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'What is the arrival point for any visitors to the Nine Hells?',
+    answers: ['the stench-ridden bog of Minauros', 'the rocky wastes of Avernus', 'the dark pits of Nessus'],
+    correctAnswer: 'the rocky wastes of Avernus'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'What is the largest metropolis in the Nine Hells?',
+    answers: ['the Iron City of Dis', 'the Clockwork Nirvana of Mechanus', 'Abriymoch, the Obsidian Fortress'],
+    correctAnswer: 'the Iron City of Dis'
   },
   {
-    question: 'Question two text',
-    answers: ['answer one', 'answer two', 'answer three'],
-    correctAnswer: 'answer one'
+    question: 'Where does the infernal court of Asmodeus reside?',
+    answers: ['the River Styx', 'the citadel-spire of Malsheem', 'the City of Brass'],
+    correctAnswer: 'the citadel-spire of Malsheem'
   }
 ];
 
@@ -107,6 +107,7 @@ function generateAnswerFeedback() {
     </div>
     </div>`;
   }
+
   else {
     return `<div>
     <h1>Infernal Plane Quiz</h1>
@@ -127,6 +128,7 @@ function generateAnswerFeedback() {
     </div>`;
   }
 }
+
 function generateFinalFeedback() {
   if (STORE.userAnswer === QUESTIONS[STORE.currentQuestion].correctAnswer) {
     return `<div>
@@ -147,6 +149,7 @@ function generateFinalFeedback() {
     </div>
     </div>`;
   }
+
   else {
     return `<div>
     <h1>Infernal Plane Quiz</h1>
@@ -167,8 +170,68 @@ function generateFinalFeedback() {
     </div>`;
   }
 }
+
 function generateResultsView() {
-  
+  if (STORE.score === 0) {
+    return `<div>
+    <h1>Infernal Plane Quiz Results</h1>
+    <h3>You answered ${STORE.score} out of 5 questions correctly</h3>
+    <p>Pitiful! You know nothing of archdevils, fiends, and their ilk! You would surely perish in the Nine Hells!</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE.score === 1) {
+    return `<div>
+    <h1>Infernal Plane Quiz Results</h1>
+    <h3>You answered ${STORE.score} out of 5 questions correctly</h3>
+    <p>Wow. You basically know nothing about the Nine Hells. That's probably a good thing.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE.score === 2) {
+    return `<div>
+    <h1>Infernal Plane Quiz Results</h1>
+    <h3>You answered ${STORE.score} out of 5 questions correctly</h3>
+    <p>Time to hit the tomes! You don't know very much about the Nine Hells. Study up, consult the infernal Sages, and try again.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;    
+  }
+  else if (STORE.score === 3) {
+    return `<div>
+    <h1>Infernal Plane Quiz Results</h1>
+    <h3>You answered ${STORE.score} out of 5 questions correctly</h3>
+    <p>So you know a bit about the Nine Hells. You're a middling scholar of fiendish lore. Congratulations.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE.score === 4) {
+    return `<div>
+    <h1>Infernal Plane Quiz Results</h1>
+    <h3>You answered ${STORE.score} out of 5 questions correctly</h3>
+    <p>Ah, we've got an infernal loremaster on our hands. You stand to learn more, but your knowledge of the Nine Hells is sound.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE.score === 5) {
+    return `<div>
+    <h1>Infernal Plane Quiz Results</h1>
+    <h3>You answered ${STORE.score} out of 5 questions correctly</h3>
+    <p>Excellent work! Your knowledge of the Nine Hells is impressive indeed! Perhaps you have traversed the planes and visited the Nine Hells yourself...</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
 }
 
 // *******************
@@ -185,7 +248,7 @@ function renderQuestionView() {
 function renderAnswerFeedback() {
   // declaration of variable for feedback generation
   // insertion answer feedback into the DOM
-  if (STORE.currentQuestion < QUESTIONS.length) {
+  if (STORE.currentQuestion < (QUESTIONS.length - 1)) {
     let answerFeedback = generateAnswerFeedback();
     $('.container').html(answerFeedback);
   }
@@ -219,16 +282,22 @@ function handleUserInputs() {
     }
     renderAnswerFeedback();
   });
+
   $('.container').on('click', '#next-question-button', event => {
     event.preventDefault();
     STORE.currentQuestion++;
     STORE.currentCounter++;
     renderQuestionView();
   });
+
   $('.container').on('click', '#final-question-button', event => {
     event.preventDefault();
     renderResultsView();
-  })
+  });
+
+  $('.container').on('click', '#reset-button', event => {
+    location.reload(true);
+  });
 }
 
 // ******************
