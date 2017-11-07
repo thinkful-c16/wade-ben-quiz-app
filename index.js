@@ -58,7 +58,7 @@ function generateAnswerList(currentIndex) {
   STORE['current question'] = QUIZDATA[currentIndex];
   STORE['current view'] = `Question number ${displayedQuestionNumber}`;
 
-  // Returning Question Template html
+  // Returning question template html
   return `<div>
   <h1>Infernal Plane Quiz</h1>
   <div class= 'questions-answered'>
@@ -89,7 +89,25 @@ function generateAnswerList(currentIndex) {
 </div>`;
 }
 
-function generateAnswerFeedback () {}
+function generateAnswerFeedback (currentQuestion) {
+  //Returning answer feedback template html
+  return `<div>
+  <h1>Infernal Plane Quiz</h1>
+  <div class= 'questions-answered'>
+    <p>Question ${STORE['answer counter']}/5</p>
+  </div>
+  <div class= 'user-answer'>Your answer: ${STORE['user answer choice(s)']}
+  </div>
+  <div class= 'correct-answer'>Correct answer: ${STORE['current question'].correctAnswer}
+  </div>
+  <div class="user-input">
+  <button name= "submit-button" id= "next-question-button" class= "input-button" type= "submit" >Submit Answer</button>
+  </div>
+  <div class= "current-score">
+    <p>Current score: ${STORE['answers correct']}/5</p>
+  </div>
+  </div>`
+}
 
 // Rendering functions
 function renderQuestionView(currentIndex) {
@@ -97,6 +115,11 @@ function renderQuestionView(currentIndex) {
   const questionAnswer = generateAnswerList(currentIndex);
   $('.container').html(questionAnswer);
   handleAnswerSubmitted(STORE['current question']);
+}
+
+function renderAnswerFeedback(currentQuestion) {
+  const answerFeedback = generateAnswerFeedback(currentQuestion)
+  // Render the question feedback in the DOM
 }
 
 // Event handlers
@@ -116,18 +139,17 @@ function handleAnswerSubmitted(currentQuestion) {
     // Retrieve answer identifier of user-checked radio button
     let userAnswer = $('input[type=radio][name=answer]:checked').val();
     // Update STORE to reflect user answer
-    STORE
+    STORE['answer choice'] = $('input[type=radio][name=answer]:checked').val();
+    STORE['answer counter']++;
     // Perform check: User answer === Correct Answer?
     if (userAnswer === currentQuestion.correctAnswer) {
       window.alert('Your answer is correct!');
-      STORE['user answer choice(s)'].push(userAnswer);
       STORE['answers correct']++;
     }
     else {
-      window.alert('You answer is incorrect!');
-      STORE['user answer choice(s)'].push(userAnswer);
+      window.alert('Your answer is incorrect!');
     }
-    // Update Store and render appropriate section  
+    renderAnswerFeedback(STORE['current question']);
   });
 }
 
