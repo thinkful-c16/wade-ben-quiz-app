@@ -47,8 +47,7 @@ const STORE = {
 // Template generators
 function generateAnswerList(currentIndex) {
   // Definition of local variables for the purpose of accessing contents of QUIZDATA
-  let displayedQuestionNumber = currentIndex;
-  displayedQuestionNumber++;
+  let displayedQuestionNumber = STORE['question counter'];
   let currentQuestion = QUIZDATA[currentIndex];
   let question = currentQuestion.question;
   let answerOne = currentQuestion.answers[0];
@@ -195,22 +194,22 @@ function generateResults () {
 }
 
 // Rendering functions
-function renderQuestionView(currentIndex) {
+function renderQuestionView() {
 //  Render the question view in the DOM
-  const questionAnswer = generateAnswerList(currentIndex);
+  const questionAnswer = generateAnswerList(STORE['current question index']);
   $('.container').html(questionAnswer);
-  handleAnswerSubmitted(STORE['current question']);
+  handleAnswerSubmitted();
 }
 
-function renderAnswerFeedback(currentQuestion) {
+function renderAnswerFeedback() {
   if (STORE['question counter'] < 5) {
-    const answerFeedback = generateAnswerFeedback(currentQuestion);
+    const answerFeedback = generateAnswerFeedback(STORE['current question'].question);
     $('.container').html(answerFeedback);
     // Render the question feedback in the DOM
     handleNextQuestion();
   }
   else {
-    const answerFeedback = generateFinalFeedback(currentQuestion);
+    const answerFeedback = generateFinalFeedback(STORE['current question'].question);
     $('.container').html(answerFeedback);
     // Render the question feedback in the DOM
     handleSeeResults();
@@ -228,36 +227,34 @@ function renderResults() {
 function handleWelcomeView() {
   // listener for begin button to trigger rendering of first question
   $('#quiz-start-button').on('click', event => {
-    // setting answer counter to 1 and calling render function for first question
-    STORE['question counter'] = 1;
-    let currentQuestionNumberIndex = STORE['current question index'];
-    renderQuestionView(currentQuestionNumberIndex);
+    // setting answer counter to 0 and calling render function for first question
+    renderQuestionView();
   });
 }
 
-function handleAnswerSubmitted(currentQuestion) {
+function handleAnswerSubmitted() {
   // Listener for submit answer button
-  $('.user-input').on('click', '.input-button', event => {
+  $('.container').on('click', '#answer-submit-button', event => {
     event.preventDefault();
     // Retrieve answer identifier of user-checked radio button
     let userAnswer = $('input[type=radio][name=answer]:checked').val();
     // Update STORE to reflect user answer
     STORE['user answer choice(s)'] = $('input[type=radio][name=answer]:checked').val();
     // Perform check: User answer === Correct Answer?
-    if (userAnswer === currentQuestion.correctAnswer) {
+    if (userAnswer === STORE['current question'].correctAnswer) {
       window.alert('Your answer is correct!');
       STORE['answers correct']++;
     }
     else {
       window.alert('Your answer is incorrect!');
     }
-    renderAnswerFeedback(STORE['current question']);
+    renderAnswerFeedback();
   });
 }
 
 function handleNextQuestion () {
   // Listener for next question button
-  $('.user-input').on('click', '.input-button', event => {
+  $('.container').on('click', '#answer-submit-button', event => {
     event.preventDefault();
     // updating question counter in STORE
     STORE['question counter']++;
