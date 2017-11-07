@@ -14,17 +14,17 @@ const QUIZDATA = [
     correctAnswer: 'answer one'
   },
   {
-    question: 'Question two text',
+    question: 'Question three text',
     answers: ['answer one', 'answer two', 'answer three'],
     correctAnswer: 'answer one'
   },
   {
-    question: 'Question two text',
+    question: 'Question four text',
     answers: ['answer one', 'answer two', 'answer three'],
     correctAnswer: 'answer one'
   },
   {
-    question: 'Question two text',
+    question: 'Question five text',
     answers: ['answer one', 'answer two', 'answer three'],
     correctAnswer: 'answer one'
   }
@@ -33,30 +33,41 @@ const QUIZDATA = [
 // Create your initial store
 const STORE = {
   // Current Question
+   'current_question': 0,
   // User's answer choice(s)
   // Current view
   // Score? Anything else?
 
 };
 
+//*************************************************/
+//*********    Combined even handlers   ***********/
+//*************************************************/
 function handleWelcomeView() {
   // listener for begin button to trigger rendering of first question
   $('#quiz-start-button').on('click', event => {
-    let currentQuestionNumberIndex = 0;
-    renderQuestionView(currentQuestionNumberIndex);
+    STORE.current_question;
+    renderQuestionView(); //Should call renderer, no parameter
   });
+  $('.container').on('click', '#answer-submit-button', event => {
+    STORE.current_question++;
+    renderQuestionView();
+  })
 }
+//*************************************************/
+//*********    Combined even handlers   ***********/
+//*************************************************/
 
 // Template generators
 // function generateAnswerList(answers) {}
 
 
 // Rendering functions
-function renderQuestionView(currentIndex) {
+function renderQuestionView() { //removed currentIndex parameter from function
   // Definition of local variables for the purpose of accessing contents of QUIZDATA
-  let displayedQuestionNumber = currentIndex;
+  let displayedQuestionNumber = STORE.current_question; //updated***
   displayedQuestionNumber++;
-  let currentQuestion = QUIZDATA[currentIndex];
+  let currentQuestion = QUIZDATA[STORE.current_question]; //Updated***
   let question = currentQuestion.question;
   let answerOne = currentQuestion.answers[0];
   let answerTwo = currentQuestion.answers[1];
