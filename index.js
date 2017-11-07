@@ -54,8 +54,7 @@ function generateAnswerView() {
   let questionIndex = STORE['current question'];
   let answers = QUESTIONS[questionIndex].answers;
 
-  return 
-    `<div>
+  return `<div>
       <h1>Infernal Plane Quiz</h1>
       <div class= 'questions-answered'>
           <p>Question ${STORE['current counter']}/5</p>
