@@ -132,6 +132,66 @@ function generateFinalFeedback (currentQuestion) {
 
 function generateResults () {
   // Returning results feedback template html depending on score
+  if (STORE['answers correct'] === 0) {
+    return `<div>
+    <h1>Results</h1>
+    <h3>You answered ${STORE['answers correct']} out of 5 questions correctly</h3>
+    <p>Pitiful! You know nothing of archdevils, fiends, and their ilk! You would surely perish in the Nine Hells!</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE['answers correct'] === 1) {
+    return `<div>
+    <h1>Results</h1>
+    <h3>You answered ${STORE['answers correct']} out of 5 questions correctly</h3>
+    <p>Wow. You basically know nothing about the Nine Hells. That's probably a good thing.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE['answers correct'] === 2) {
+    return `<div>
+    <h1>Results</h1>
+    <h3>You answered ${STORE['answers correct']} out of 5 questions correctly</h3>
+    <p>Time to hit the tomes! You don't know very much about the Nine Hells. Study up, consult the infernal Sages, and try again.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;    
+  }
+  else if (STORE['answers correct'] === 3) {
+    return `<div>
+    <h1>Results</h1>
+    <h3>You answered ${STORE['answers correct']} out of 5 questions correctly</h3>
+    <p>So you know a bit about the Nine Hells. You're a middling scholar of fiendish lore. Congratulations.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE['answers correct'] === 4) {
+    return `<div>
+    <h1>Results</h1>
+    <h3>You answered ${STORE['answers correct']} out of 5 questions correctly</h3>
+    <p>Ah, we've got an infernal loremaster on our hands. You stand to learn more, but your knowledge of the Nine Hells is sound.</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
+  else if (STORE['answers correct'] === 5) {
+    return `<div>
+    <h1>Results</h1>
+    <h3>You answered ${STORE['answers correct']} out of 5 questions correctly</h3>
+    <p>Excellent work! Your knowledge of the Nine Hells is impressive indeed! Perhaps you have traversed the planes and visited the Nine Hells yourself...</p>
+    </div>
+    <div class="user-input">
+      <button name= "submit-button" id= "reset-button" class= "input-button" type= "submit" >Take quiz again</button>
+    </div>`;
+  }
 }
 
 // Rendering functions
@@ -216,4 +276,5 @@ $(function main() {
   handleWelcomeView();
   handleAnswerSubmitted();
   handleNextQuestion();
+  handleSeeResults();
 });
