@@ -167,6 +167,9 @@ function generateFinalFeedback() {
     </div>`;
   }
 }
+function generateResultsView() {
+  
+}
 
 // *******************
 // Rendering functions
@@ -190,8 +193,10 @@ function renderAnswerFeedback() {
     let answerFeedback = generateFinalFeedback();
     $('.container').html(answerFeedback);
   }
-  
-  
+}
+function renderResultsView() {
+  let results = generateResultsView();
+  $('.container').html(results);
 }
 
 // **************
