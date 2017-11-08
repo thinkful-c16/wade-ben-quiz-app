@@ -171,6 +171,7 @@ function generateFinalFeedback() {
   }
 }
 
+
 function generateResultsView() {
   if (STORE.score === 0) {
     return `<div>
@@ -234,6 +235,17 @@ function generateResultsView() {
   }
 }
 
+function generateWelcomeView() {
+  return `<div>
+    <h1>Welcome to the Infernal Plane Quiz!</h1>
+    <h3>Greetings adventurer! So you think you know a thing or two about the Nine Hells, eh?</h3>
+    <p>This quiz will evaluate your basic knowledge of that most forsaken plane: the Nine Hells. Whether you're a righteous paladin intent on banishing evil, or an aspiring warlock looking to strike a fiendish pact for power -- you've come to the right place. Take the quiz... if you dare.</p>
+  </div>
+  <div class="user-input">
+    <button name= "start-button" id= "quiz-start-button" class= "input-button" type= "submit" >Take the quiz!</button>
+  </div>`;
+}
+
 // *******************
 // Rendering functions
 // *******************
@@ -262,13 +274,18 @@ function renderResultsView() {
   $('.container').html(results);
 }
 
+function renderWelcomeView() {
+  let welcome = generateWelcomeView();
+  $('.container').html(welcome);
+}
+
 // **************
 // Event handlers
 // **************
-
+  // $('container').on('click', '#quiz-start-button', event) ** delete this line
 function handleUserInputs() {
   // listener for begin button to trigger rendering of first question
-  $('#quiz-start-button').on('click', event => {
+  $('.container').on('click', '#quiz-start-button', event => {  // ***** changed so container class delegates to button
     renderQuestionView();
   });
   // listener for answer submit button
@@ -303,8 +320,13 @@ function handleUserInputs() {
     renderResultsView();
   });
 
+//   $('.container').on('click', '#reset-button', event => {
+//     location.reload(true);  // ***************************** change this to reset state
+//   });
+// }
   $('.container').on('click', '#reset-button', event => {
-    location.reload(true);  // ***************************** change this to reset state
+    event.preventDefault();
+    renderWelcomeView();  // ****** changed this to reset state vs reload page
   });
 }
 
