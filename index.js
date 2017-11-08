@@ -304,7 +304,7 @@ function handleUserInputs() {
   });
 
   $('.container').on('click', '#reset-button', event => {
-    location.reload(true);
+    location.reload(true);  // ***************************** change this to reset state
   });
 }
 
